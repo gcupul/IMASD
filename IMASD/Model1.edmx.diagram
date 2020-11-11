@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c0ca1c15e334684a21881f0e757ed04" Name="Diagram1">
+        <EntityTypeShape EntityType="BDNOMINA2020Model.user" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.departamento" Width="1.5" PointX="3.375" PointY="4.625" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.empleado" Width="1.5" PointX="5.625" PointY="4" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.nominaEmpleado" Width="1.5" PointX="7.875" PointY="4.25" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.tabulador" Width="1.5" PointX="7.875" PointY="8.125" />
+        <AssociationConnector Association="BDNOMINA2020Model.FK_empleado_departamento" />
+        <AssociationConnector Association="BDNOMINA2020Model.FK_nominaEmpleado_empleado" />
+        <AssociationConnector Association="BDNOMINA2020Model.FK_tabulador_empleado" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.nomina" Width="1.5" PointX="5.5" PointY="0.625" />
+        <AssociationConnector Association="BDNOMINA2020Model.FK_nominaEmpleado_nomina" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
