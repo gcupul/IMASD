@@ -1,0 +1,154 @@
+﻿@model IMASD.tabulador
+
+@{
+    ViewBag.Title = "Tabulador";
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Empleados </h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Empleados</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tabulador de Sueldo</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+
+
+
+    <div class="row">
+        <div class="col-xl-8 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Empleado </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Nombres</label>
+                                    <input type="text" value="@Html.ViewData["nombres"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Apellidos</label>
+                                    <input type="text" value="@Html.ViewData["apellidos"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Dirección</label>
+                                    <input type="text" value="@Html.ViewData["direccion"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Teléfono</label>
+                                    <input type="text" value="@Html.ViewData["telefono"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Departamento</label>
+                                    <input type="text" value="@Html.ViewData["departamento"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                            </div>
+                        </div>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <hr class="my-4" />
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h6 class="heading-small text-muted mb-4">Tabulador de sueldo</h6>
+                                <input type="hidden" name="numEmpleado" value="@ViewData["numEmpleado"]"/>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">Gurdar</button>
+                            </div>
+                        </div>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.sueldo, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.sueldo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.sueldo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.primaVacacional, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.primaVacacional, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.primaVacacional, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.aguinaldo, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.aguinaldo, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.aguinaldo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.vales, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.vales, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.vales, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.vacaciones, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.vacaciones, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.vacaciones, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+
+    <hr />
+    <footer class="footer pt-0">
+        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+    </footer>
+</div>

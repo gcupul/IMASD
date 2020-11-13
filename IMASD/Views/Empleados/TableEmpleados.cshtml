@@ -1,0 +1,55 @@
+﻿@model List<IMASD.Models.ListEmpleados>
+
+
+<!-- Projects table -->
+<table class="table align-items-center table-flush">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col"># Empleado</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Inicio</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">
+                    @Html.DisplayFor(modelItem => item.numEmpleado)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.departamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.numEmpleado }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.numEmpleado }) |
+                    @Html.ActionLink("Tabulador", "Tabulador", new { id = item.numEmpleado })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

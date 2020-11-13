@@ -32,9 +32,13 @@ namespace IMASD
             bundles.Add(new ScriptBundle("~/bundles/cookie").Include(
                       "~/Scripts/js.cookie.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-datepicker").Include(
+                      "~/Scripts/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/nucleo.css",
-                      "~/Content/argon.css"));
+                      "~/Content/argon.css",
+                      "~/Content/@fortawesome/fontawesome-free/css/all.min.css"));
         }
     }
 }

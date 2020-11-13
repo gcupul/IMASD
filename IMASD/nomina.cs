@@ -11,7 +11,9 @@ namespace IMASD
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class nomina
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +23,14 @@ namespace IMASD
         }
     
         public int nominaId { get; set; }
+        [DisplayName("Descripción")]
         public string descripcion { get; set; }
-        public Nullable<System.DateTime> inicio { get; set; }
-        public Nullable<System.DateTime> fin { get; set; }
+        [DisplayName("Fecha Inicio")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public System.DateTime inicio_n { get; set; }
+        [DisplayName("Fecha Fin")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public System.DateTime fin_n { get; set; }
         public string status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

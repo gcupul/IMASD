@@ -11,14 +11,20 @@ namespace IMASD
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class tabulador
     {
         public int tabuladorId { get; set; }
+        [DisplayName("Sueldo ($)")]
         public decimal sueldo { get; set; }
+        [DisplayName("Prima Vacacional (%)")]
         public decimal primaVacacional { get; set; }
+        [DisplayName("Días de aguinaldo")]
         public int aguinaldo { get; set; }
+        [DisplayName("Vales de despensa ($)")]
         public Nullable<decimal> vales { get; set; }
+        [DisplayName("Días de Vacaciones")]
         public int vacaciones { get; set; }
         public int numEmpleado { get; set; }
     

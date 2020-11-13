@@ -11,13 +11,13 @@ namespace IMASD.Controllers
         // GET: Departamentos
         public ActionResult Index()
         {
-            return View();
-        }
+            using (var context = new BDNOMINA2020Entities())
+            {
 
-        // GET: Departamentos/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+                // Return the list of data from the database 
+                var data = context.departamentoes.ToList();
+                return View(data);
+            }
         }
 
         // GET: Departamentos/Create
@@ -36,6 +36,8 @@ namespace IMASD.Controllers
                 using (var context = new BDNOMINA2020Entities())
                 {
                     // Add data to the particular table 
+                    objDepartamento.create_at = DateTime.Now;
+                    objDepartamento.update_at = DateTime.Now;
                     context.departamentoes.Add(objDepartamento);
 
                     // save the changes 
@@ -58,16 +60,40 @@ namespace IMASD.Controllers
         // GET: Departamentos/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            using (var context = new BDNOMINA2020Entities())
+            {
+                var data = context.departamentoes.Where(x => x.departamentoId == id).SingleOrDefault();
+                return View(data);
+            }
         }
 
         // POST: Departamentos/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, departamento objDepartamento)
         {
             try
             {
-                // TODO: Add update logic here
+                // To open a connection to the database 
+                using (var context = new BDNOMINA2020Entities())
+                {
+                    // particular record from a database 
+                    var data = context.departamentoes.FirstOrDefault(x => x.departamentoId == id);
+                    if (data != null)
+                    {
+                        // save the changes 
+                        data.nombre = objDepartamento.nombre;
+                        data.descripcion = objDepartamento.descripcion;
+                        data.update_at = DateTime.Now;
+                        context.SaveChanges();
+                    }
+
+                }
+                string message = "Updated the record successfully";
+
+                // To display the message on the screen 
+                // after the record is created successfully 
+                ViewBag.Message = message;
 
                 return RedirectToAction("Index");
             }
@@ -80,18 +106,32 @@ namespace IMASD.Controllers
         // GET: Departamentos/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            using (var context = new BDNOMINA2020Entities())
+            {
+                var data = context.departamentoes.Where(x => x.departamentoId == id).SingleOrDefault();
+                return View(data);
+            }
         }
 
         // POST: Departamentos/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                using (var context = new BDNOMINA2020Entities())
+                {
+                    var data = context.departamentoes.FirstOrDefault(x => x.departamentoId == id);
+                    if (data != null)
+                    {
+                        context.departamentoes.Remove(data);
+                        context.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        return View();
+                }
             }
             catch
             {

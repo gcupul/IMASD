@@ -11,15 +11,19 @@ namespace IMASD
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class nominaEmpleado
     {
         public int nominaEmpleadoId { get; set; }
         public int nominaId { get; set; }
         public int numEmpleado { get; set; }
         public string status { get; set; }
+        [DisplayName("Días Trabajados")]
         public int diasTrabajado { get; set; }
+        [DisplayName("Sueldo")]
         public decimal sueldo { get; set; }
+        [DisplayName("Vales de despensa")]
         public decimal vales { get; set; }
         public System.DateTime create_at { get; set; }
     
