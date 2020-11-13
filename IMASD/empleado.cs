@@ -11,7 +11,9 @@ namespace IMASD
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class empleado
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,14 +24,24 @@ namespace IMASD
         }
     
         public int numEmpleado { get; set; }
+        [DisplayName("Nombres")]
         public string nombres { get; set; }
+        [DisplayName("Apellidos")]
         public string apellidos { get; set; }
+        [DisplayName("Dirección")]
         public string direccion { get; set; }
+        [DisplayName("Teléfono")]
         public string telefono { get; set; }
+        [DisplayName("Fecha de Inicio")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime inicio { get; set; }
+        [DisplayName("Status")]
         public string status { get; set; }
+        [DisplayName("Departamento")]
         public int departamentoId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime create_at { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime update_at { get; set; }
     
         public virtual departamento departamento { get; set; }

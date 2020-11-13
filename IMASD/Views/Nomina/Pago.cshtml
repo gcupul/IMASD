@@ -1,0 +1,175 @@
+﻿@model List<IMASD.Models.TabuladoEmpleado.TabEmpleado>
+
+@{
+    ViewBag.Title = "Pago";
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Nominas </h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Nominas</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Pago</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-8 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Pago de Nomina</h3>
+                        </div>
+                        <div class="col-4 text-right">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label">Descripción</label>
+                                    <input type="text" value="@Html.ViewData["descripcion"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Inicio</label>
+                                    <input type="text" value="@Html.ViewData["inicio"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Fin</label>
+                                    <input type="text" value="@Html.ViewData["fin"]" class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    <div class="row">
+        <div class="col-xl-10">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Lista de Empleados</h3>
+                        </div>
+                        <div class="col text-right">
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <label class="mb-0">Filtrar por Departamentos</label>
+                            @Html.DropDownList("departmento", ViewBag.departamentoId as List<SelectListItem>, "----- Todos -----",
+                           new { @class = "form-control", @id = "departamentoId", onchange = "filtDepartamento(this.value)" })
+                        </div>
+                        <div class="col text-right">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" id="TableEmpleados">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
+    <footer class="footer pt-0">
+        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+    </footer>
+</div>
+
+<script>
+    $(function () {
+        $("#TableEmpleados").load('@Url.Action("TableEmpleados", new { id = @Html.ViewData["nominaId"], iddep = 0 })');
+    });
+
+    function filtDepartamento(dep) {
+        if (dep == "") dep = 0;
+        $("#TableEmpleados").load("/Nomina/TableEmpleados?id=@Html.ViewData["nominaId"]&iddep=" + dep);
+    }
+
+    function calSueldo(val, id) {
+        var sueldoT = $("#sueldoT-" + id).val();
+        var valesT = $("#valesT-" + id).val();
+        var sueldo = (sueldoT / 30) * val;
+        var vales = (valesT / 30) * val;
+        $("#sueldo-" + id).val(sueldo.toFixed(2));
+        $("#vales-" + id).val(vales.toFixed(2));
+    }
+
+    function guardar(id, proceso) {
+        var nomEmpleado = new Object();
+        nomEmpleado.nominaId = @Html.ViewData["nominaId"];
+        nomEmpleado.nominaEmpleadoId = $("#nominaEmpleadoId-" + id).val();
+        nomEmpleado.numEmpleado = $("#numEmpleado-" + id).val();
+        nomEmpleado.diasTrabajado = $("#diasTrabajado-" + id).val();
+        nomEmpleado.sueldo = $("#sueldo-" + id).val();
+        nomEmpleado.vales = $("#vales-" + id).val();
+
+        if (proceso == "guardar") {
+            if (nomEmpleado.status != "")
+                nomEmpleado.status = $("#status-" + id).text();
+            else
+                nomEmpleado.status = "En Proceso";
+        } else if (proceso == "pagar") {
+            nomEmpleado.status = "Pagado";
+        }
+
+
+
+        $.ajax({
+            type: "Post",
+            url: "/Nomina/Pago/" + id,
+            data: JSON.stringify(nomEmpleado),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $("#nominaEmpleadoId-" + id).val(response.nominaEmpleadoId);
+                var dep = $("#departamentoId").val();
+                if (dep == "") dep = 0;
+                $("#TableEmpleados").load("/Nomina/TableEmpleados?id=" + response.nominaId + "&iddep=" + dep);
+                /*$("#nominaEmpleadoId-" + id).val(response.nominaEmpleadoId);
+                $("#status-" + id).text(response.status);
+
+                if (response.status == "Pagado") {
+                    $("#diasTrabajado-" + id).prop("disabled", true);
+                }*/
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

@@ -12,9 +12,10 @@
         <EntityTypeShape EntityType="BDNOMINA2020Model.tabulador" Width="1.5" PointX="7.875" PointY="8.125" />
         <AssociationConnector Association="BDNOMINA2020Model.FK_empleado_departamento" />
         <AssociationConnector Association="BDNOMINA2020Model.FK_nominaEmpleado_empleado" />
-        <AssociationConnector Association="BDNOMINA2020Model.FK_tabulador_empleado" />
-        <EntityTypeShape EntityType="BDNOMINA2020Model.nomina" Width="1.5" PointX="5.5" PointY="0.625" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BDNOMINA2020Model.nomina" Width="1.5" PointX="6.5" PointY="1" />
         <AssociationConnector Association="BDNOMINA2020Model.FK_nominaEmpleado_nomina" />
+        <AssociationConnector Association="BDNOMINA2020Model.FK_tabulador_empleado" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

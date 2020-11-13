@@ -8,6 +8,8 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
     <!-- Sidenav -->
@@ -23,21 +25,27 @@
                     <!-- Nav items -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="@Url.Action("", "Home")">
+                            <a class="nav-link active" href="@Url.Action("Index", "Home")">
                                 <i class="ni ni-tv-2 text-primary"></i>
                                 <span class="nav-link-text">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("", "Home/About")">
+                            <a class="nav-link" href="@Url.Action("Index", "Departamentos")">
                                 <i class="ni ni-planet text-orange"></i>
-                                <span class="nav-link-text">About</span>
+                                <span class="nav-link-text">Departamentos</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("", "Home/Contact")">
-                                <i class="ni ni-pin-3 text-primary"></i>
-                                <span class="nav-link-text">Contact</span>
+                            <a class="nav-link" href="@Url.Action("Index", "Empleados")">
+                                <i class="ni ni-planet text-orange"></i>
+                                <span class="nav-link-text">Empleados</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Nomina")">
+                                <i class="ni ni-planet text-orange"></i>
+                                <span class="nav-link-text">Nominas</span>
                             </a>
                         </li>
                     </ul>
@@ -88,15 +96,14 @@
                 </div>
             </div>
         </nav>
-        
+
 
         @RenderBody()
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/cookie")
     @Scripts.Render("~/bundles/jqueryscroll")
+    @Scripts.Render("~/bundles/bootstrap-datepicker")
     @Scripts.Render("~/bundles/argon")
     @RenderSection("scripts", required: false)
 </body>

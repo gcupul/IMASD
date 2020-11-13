@@ -3,16 +3,20 @@
     ViewBag.Title = "Create";
 }
 
-<div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
-    <!-- Mask -->
-    <span class="mask bg-gradient-default opacity-8"></span>
-    <!-- Header container -->
-    <div class="container-fluid d-flex align-items-center">
-        <div class="row">
-            <div class="col-lg-7 col-md-10">
-                <h1 class="display-2 text-white">Departamento</h1>
-                <p class="text-white mt-0 mb-5">Este es el formulario para crear un nuevo departamento</p>
-                <a href="#!" class="btn btn-neutral">Regresar</a>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Departamentos </h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Departamentos</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Create</li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
@@ -21,32 +25,35 @@
 
     @using (Html.BeginForm("Create", "Departamentos", FormMethod.Post))
     {
-    <div class="row">
-        <div class="col-xl-8 order-xl-1">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">Nuevo Departamento </h3>
-                        </div>
-                        <div class="col-4 text-right">
-                            <button type="submit" class="btn btn-sm btn-primary">Gurdar</button>
+        <div class="row">
+            <div class="col-xl-8 order-xl-1">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Nuevo Departamento </h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">Gurdar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="pl-lg-4">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Nombre</label>
-                                    @Html.TextBoxFor(a => a.nombre)
+                    <div class="card-body">
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-email">Descripción</label>
-                                    @Html.TextBoxFor(a => a.descripcion)
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "form-control-label" })
+                                        @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,8 +61,11 @@
                 </div>
             </div>
         </div>
-    </div>
     }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
 
     <hr />

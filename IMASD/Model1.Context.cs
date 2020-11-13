@@ -30,6 +30,7 @@ namespace IMASD
         public virtual DbSet<empleado> empleadoes { get; set; }
         public virtual DbSet<nominaEmpleado> nominaEmpleadoes { get; set; }
         public virtual DbSet<tabulador> tabuladors { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<nomina> nominas { get; set; }
     }
 }

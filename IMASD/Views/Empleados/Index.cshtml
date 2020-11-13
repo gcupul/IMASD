@@ -1,0 +1,70 @@
+﻿@model List<IMASD.Models.ListEmpleados>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Empleados </h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Empleados</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Lista de Departamentos</h3>
+                        </div>
+                        <div class="col text-right">
+                            @Html.ActionLink("Crear nuevo", "Create", "Empleados", null, new { @class = "btn btn-sm btn-primary" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <label class="mb-0">Filtrar por Departamentos</label>
+                            @Html.DropDownList("departmento", ViewBag.departamentoId as List<SelectListItem>, "----- Todos -----", 
+                           new { @class = "form-control", @id = "departamentoId", onchange = "filtDepartamento(this.value)" })
+                        </div>
+                        <div class="col text-right">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" id="TableEmpleados">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
+    <footer class="footer pt-0">
+        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+    </footer>
+</div>
+
+<script>
+    $(function () {
+        $("#TableEmpleados").load('@Url.Action("TableEmpleados", new { iddep = 0 })');
+    });
+    function filtDepartamento(dep) {
+        if (dep == "") dep = 0;
+        $("#TableEmpleados").load("/Empleados/TableEmpleados?iddep=" + dep);
+    }
+</script>

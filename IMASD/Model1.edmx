@@ -35,10 +35,10 @@
             <PropertyRef Name="nominaId" />
           </Key>
           <Property Name="nominaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="100" />
-          <Property Name="inicio" Type="date" />
-          <Property Name="fin" Type="date" />
-          <Property Name="status" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="inicio_n" Type="date" Nullable="false" />
+          <Property Name="fin_n" Type="date" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="nominaEmpleado">
           <Key>
@@ -52,6 +52,16 @@
           <Property Name="sueldo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="vales" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="create_at" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="tabulador">
           <Key>
@@ -86,18 +96,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_nominaEmpleado_empleado">
-          <End Role="empleado" Type="Self.empleado" Multiplicity="1" />
-          <End Role="nominaEmpleado" Type="Self.nominaEmpleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="empleado">
-              <PropertyRef Name="numEmpleado" />
-            </Principal>
-            <Dependent Role="nominaEmpleado">
-              <PropertyRef Name="numEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_nominaEmpleado_nomina">
           <End Role="nomina" Type="Self.nomina" Multiplicity="1" />
           <End Role="nominaEmpleado" Type="Self.nominaEmpleado" Multiplicity="*" />
@@ -127,15 +125,12 @@
           <EntitySet Name="empleado" EntityType="Self.empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nomina" EntityType="Self.nomina" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nominaEmpleado" EntityType="Self.nominaEmpleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tabulador" EntityType="Self.tabulador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_empleado_departamento" Association="Self.FK_empleado_departamento">
             <End Role="departamento" EntitySet="departamento" />
             <End Role="empleado" EntitySet="empleado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_nominaEmpleado_empleado" Association="Self.FK_nominaEmpleado_empleado">
-            <End Role="empleado" EntitySet="empleado" />
-            <End Role="nominaEmpleado" EntitySet="nominaEmpleado" />
           </AssociationSet>
           <AssociationSet Name="FK_nominaEmpleado_nomina" Association="Self.FK_nominaEmpleado_nomina">
             <End Role="nomina" EntitySet="nomina" />
@@ -173,14 +168,15 @@
             <End Role="empleado" EntitySet="empleadoes" />
             <End Role="nominaEmpleado" EntitySet="nominaEmpleadoes" />
           </AssociationSet>
-          <AssociationSet Name="FK_tabulador_empleado" Association="BDNOMINA2020Model.FK_tabulador_empleado">
-            <End Role="empleado" EntitySet="empleadoes" />
-            <End Role="tabulador" EntitySet="tabuladors" />
-          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="BDNOMINA2020Model.sysdiagram" />
           <EntitySet Name="nominas" EntityType="BDNOMINA2020Model.nomina" />
           <AssociationSet Name="FK_nominaEmpleado_nomina" Association="BDNOMINA2020Model.FK_nominaEmpleado_nomina">
             <End Role="nomina" EntitySet="nominas" />
             <End Role="nominaEmpleado" EntitySet="nominaEmpleadoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabulador_empleado" Association="BDNOMINA2020Model.FK_tabulador_empleado">
+            <End Role="empleado" EntitySet="empleadoes" />
+            <End Role="tabulador" EntitySet="tabuladors" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="departamento">
@@ -193,7 +189,7 @@
           <Property Name="create_at" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="update_at" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="empleadoes" Relationship="BDNOMINA2020Model.FK_empleado_departamento" FromRole="departamento" ToRole="empleado" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="empleado">
           <Key>
             <PropertyRef Name="numEmpleado" />
@@ -264,27 +260,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tabulador_empleado">
-          <End Type="BDNOMINA2020Model.empleado" Role="empleado" Multiplicity="1" />
-          <End Type="BDNOMINA2020Model.tabulador" Role="tabulador" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="empleado">
-              <PropertyRef Name="numEmpleado" />
-            </Principal>
-            <Dependent Role="tabulador">
-              <PropertyRef Name="numEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="nomina">
           <Key>
             <PropertyRef Name="nominaId" />
           </Key>
           <Property Name="nominaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="inicio" Type="DateTime" Precision="0" />
-          <Property Name="fin" Type="DateTime" Precision="0" />
-          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="inicio_n" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fin_n" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="nominaEmpleadoes" Relationship="BDNOMINA2020Model.FK_nominaEmpleado_nomina" FromRole="nomina" ToRole="nominaEmpleado" />
         </EntityType>
         <Association Name="FK_nominaEmpleado_nomina">
@@ -296,6 +290,18 @@
             </Principal>
             <Dependent Role="nominaEmpleado">
               <PropertyRef Name="nominaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabulador_empleado">
+          <End Type="BDNOMINA2020Model.empleado" Role="empleado" Multiplicity="1" />
+          <End Type="BDNOMINA2020Model.tabulador" Role="tabulador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="numEmpleado" />
+            </Principal>
+            <Dependent Role="tabulador">
+              <PropertyRef Name="numEmpleado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -369,12 +375,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BDNOMINA2020Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="nominas">
             <EntityTypeMapping TypeName="BDNOMINA2020Model.nomina">
               <MappingFragment StoreEntitySet="nomina">
                 <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="fin" ColumnName="fin" />
-                <ScalarProperty Name="inicio" ColumnName="inicio" />
+                <ScalarProperty Name="fin_n" ColumnName="fin_n" />
+                <ScalarProperty Name="inicio_n" ColumnName="inicio_n" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="nominaId" ColumnName="nominaId" />
               </MappingFragment>

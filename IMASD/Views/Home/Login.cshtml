@@ -59,7 +59,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
-                                        @Html.TextBoxFor(a => a.userName)
+                                        @Html.TextBoxFor(a => a.userName, new { data_bind = "value: User", @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -67,7 +67,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                         </div>
-                                        @Html.PasswordFor(a => a.pass)
+                                        @Html.PasswordFor(a => a.pass, new { data_bind = "value: Password", @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="text-center">

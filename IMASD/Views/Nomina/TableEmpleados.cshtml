@@ -1,0 +1,64 @@
+﻿@model List<IMASD.Models.TabuladoEmpleado.TabEmpleado>
+
+<table class="table align-items-center table-flush">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col"># Empleado</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Días Trabajados</th>
+            <th scope="col">Sueldo</th>
+            <th scope="col">Vales</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">
+                    @Html.DisplayFor(modelItem => item.numEmpleado)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.departamento)
+                </td>
+                <td>
+                    @Html.HiddenFor(model => item.nominaEmpleadoId, new { @id = "nominaEmpleadoId-" + @Html.DisplayFor(modelItem => item.numEmpleado), @Name = "nominaEmpleadoId-" + @Html.DisplayFor(modelItem => item.numEmpleado) })
+                    @Html.HiddenFor(model => item.numEmpleado, new { @id = "numEmpleado-" + @Html.DisplayFor(modelItem => item.numEmpleado), @Name = "numEmpleado-" + @Html.DisplayFor(modelItem => item.numEmpleado) })
+                    @Html.HiddenFor(model => item.sueldo, new { @id = "sueldoT-" + @Html.DisplayFor(modelItem => item.numEmpleado), @Name = "sueldoT-" + @Html.DisplayFor(modelItem => item.numEmpleado) })
+                    @Html.HiddenFor(model => item.vales, new { @id = "valesT-" + @Html.DisplayFor(modelItem => item.numEmpleado), @Name = "valesT-" + @Html.DisplayFor(modelItem => item.numEmpleado) })
+                    @if (item.status == "Pagado")
+                    {
+                        <input type="text" id="diasTrabajado-@Html.DisplayFor(modelItem => item.numEmpleado)" name="diasTrabajado-@Html.DisplayFor(modelItem => item.numEmpleado)" value="@Html.DisplayFor(modelItem => item.diasTrabajado)" class="diasT form-control" disabled />
+                    }
+                    else
+                    {
+                        <input type="text" onkeyup="calSueldo(this.value, @Html.DisplayFor(modelItem => item.numEmpleado))" id="diasTrabajado-@Html.DisplayFor(modelItem => item.numEmpleado)" name="diasTrabajado-@Html.DisplayFor(modelItem => item.numEmpleado)" value="@Html.DisplayFor(modelItem => item.diasTrabajado)" class="diasT form-control" />
+                    }
+
+                </td>
+                <td>
+                    <input type="text" id="sueldo-@Html.DisplayFor(modelItem => item.numEmpleado)" name="sueldo-@Html.DisplayFor(modelItem => item.numEmpleado)" value="@Html.DisplayFor(modelItem => item.sueldo_n)" class="sueldo form-control" disabled />
+                </td>
+                <td>
+                    <input type="text" id="vales-@Html.DisplayFor(modelItem => item.numEmpleado)" name="vales-@Html.DisplayFor(modelItem => item.numEmpleado)" value="@Html.DisplayFor(modelItem => item.vales_n)" class="sueldo form-control" disabled />
+                </td>
+                <td>
+                    <label id="status-@Html.DisplayFor(modelItem => item.numEmpleado)">@Html.DisplayFor(modelItem => item.status)</label>
+                </td>
+                <td>
+                    <button type="button" onclick="guardar(@Html.DisplayFor(modelItem => item.numEmpleado), 'guardar')" class="btn btn-sm btn-primary">Guardar</button>
+                    <button type="button" onclick="guardar(@Html.DisplayFor(modelItem => item.numEmpleado), 'pagar')" class="btn btn-sm btn-primary">Pagar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
